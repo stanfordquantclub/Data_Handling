@@ -35,10 +35,6 @@ df = df[(df["Timestamp"] >= start_time) & (df["Timestamp"] < end_time)]
 total_seconds = int((end_datetime - start_datetime).total_seconds())
 
 # %%
-out_path = "/srv/sqc/volatility_exploration/fixed_candle/sample.csv"
-df.to_csv(out_path)
-
-# %%
 CLOCK_HOURS = np.array([int((start_datetime + timedelta(seconds=x)).time().strftime("%H%M%S")) for x in range(0, total_seconds)])
 
 # %%
@@ -55,9 +51,16 @@ df_bid = df[df['Quantity'] >= 75]
 df_ask = (df_ask.loc[df_ask.groupby('TimestampSec').apply(lambda x: x.index[-1]).tolist()])[['TimestampSec', 'Side', 'Price', 'Quantity']]
 df_bid = (df_bid.loc[df_bid.groupby('TimestampSec').apply(lambda x: x.index[-1]).tolist()])[['TimestampSec', 'Side', 'Price', 'Quantity']]
 
-df_ask = df_ask.set_index(['Side', 'TimestampSec']).reindex(pd.MultiIndex.from_product([['A'], CLOCK_HOURS])).fillna(method='ffill')
-df_bid = df_bid.set_index(['Side', 'TimestampSec']).reindex(pd.MultiIndex.from_product([['B'], CLOCK_HOURS])).fillna(method='ffill')
+df_ask = df_ask.set_index(['Side', 'TimestampSec']).reindex(pd.MultiIndex.from_product([['A'], CLOCK_HOURS])).fillna(method='ffill').fillna(0)
+df_bid = df_bid.set_index(['Side', 'TimestampSec']).reindex(pd.MultiIndex.from_product([['B'], CLOCK_HOURS])).fillna(method='ffill').fillna(0)
 
 
 df_trade = df[df['Action'] == "T"]
-df_trade = (df_trade.loc[df_trade.groupby('TimestampSec').apply(lambda x: x.index[-1]).tolist()])
+df_trade = (df_trade.loc[df_trade.groupby('TimestampSec').apply(lambda x: x.index[-1]).tolist()])[['TimestampSec', 'Price', 'Quantity']]
+# %%
+print(df_trade)
+#print(df_trade)
+# %%
+plt.plot(df_ask['Price'].tolist()[300:])
+plt.show()
+# %%
