@@ -1,12 +1,10 @@
-# %%
 from datetime import date, time, datetime, timedelta
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def candle_options_NBBO(file_path, output_path, start_time=time(9, 30, 0), end_time=time(16, 0, 0)):
+def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_time=time(16, 0, 0)):
     df = pd.read_csv(file_path, compression='gzip')
-    columns = df.columns.values.tolist()
     open_interest = df.iloc[0].tolist()[9]
     contract_type = df.iloc[0].tolist()[2]
 
@@ -19,7 +17,7 @@ def candle_options_NBBO(file_path, output_path, start_time=time(9, 30, 0), end_t
     end_time = int(end_datetime.strftime("%H%M%S")) * 1000
 
     # FILTER OUT ITEMS FROM PRE-MARKET AND POST-MARKET
-    df["TimestampSec"] = df["Timestamp"] // 1000
+    df["TimestampSec"] = df["Timestamp"] // 1000 
     df = df[(df["Timestamp"] >= start_time) & (df["Timestamp"] < end_time)]
     total_seconds = int((end_datetime - start_datetime).total_seconds())
 
@@ -105,9 +103,10 @@ def candle_options_NBBO(file_path, output_path, start_time=time(9, 30, 0), end_t
 
     df_all = pd.DataFrame({'Timestamp': CLOCK_HOURS, 'OI': OI, 'Num_strikes': num_strikes})
     df_candled = pd.concat([df_all, df_under_ask, df_under_bid, df_ask, df_bid, df_volume, df_price], axis=1)
-    #out_path = "/srv/sqc/volatility_exploration/fixed_candle/blah.csv"
     df_candled.to_csv(output_path)
 
-#path = "/srv/sqc/data/us-options-tanq/us-options-tanq-2022/20221201/S/SPY/SPY.20221201/SPY.P408.20221201.csv.gz"
+path = "/srv/sqc/data/us-options-tanq/us-options-tanq-2022/20221201/S/SPY/SPY.20221201/SPY.P408.20221201.csv.gz"
+out_path = "/srv/sqc/volatility_exploration/fixed_candle/blah.csv"
 
+options_NBBO_candle(path, out_path)
  
