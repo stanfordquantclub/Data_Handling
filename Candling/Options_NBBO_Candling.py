@@ -67,11 +67,11 @@ def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_t
 
     df_price = (df_trade.loc[df_trade.groupby('TimestampSec')
                         .apply(lambda x: x.index[-1]).tolist()]
-                        [['TimestampSec', 'Action', 'Price', 'Quantity']]
+                        [['TimestampSec', 'Action', 'Price']]
                         .set_index(['Action', 'TimestampSec'])
                         .reindex(pd.MultiIndex.from_product([['T'], CLOCK_HOURS]))
                         .fillna(method='ffill').fillna(0)
-                        .rename(columns={"TimestampSec": "Timestamp", "Quantity": "TotalVolume"}))
+                        .rename(columns={"TimestampSec": "Timestamp"}))
     df_price.reset_index(drop=True, inplace=True)
     df_price.columns = df_price.columns.get_level_values(0)
 
@@ -100,7 +100,7 @@ def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_t
     OI = np.full(len(CLOCK_HOURS), open_interest)
 
     df_all = pd.DataFrame({'Timestamp': CLOCK_HOURS, 'OI': OI, 'Num_strikes': num_strikes})
-    df_candled = pd.concat([df_all, df_under_ask, df_under_bid, df_ask, df_bid, df_volume, df_price], axis=1)
+    df_candled = pd.concat([df_all, df_under_ask, df_under_bid, df_ask, df_bid, df_price, df_volume], axis=1)
     df_candled.to_csv(output_path)
 
 path = "/srv/sqc/data/us-options-tanq/us-options-tanq-2022/20221201/S/SPY/SPY.20221201/SPY.P408.20221201.csv.gz"
