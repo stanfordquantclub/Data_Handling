@@ -1,10 +1,8 @@
-# %%
 from datetime import date, time, datetime, timedelta
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# %%
 def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_time=time(16, 0, 0)):
     df = pd.read_csv(file_path, compression='gzip')
     open_interest = df.iloc[0].tolist()[9]
@@ -103,19 +101,4 @@ def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_t
     df_candled = pd.concat([df_all, df_under_ask, df_under_bid, df_ask, df_bid, df_price, df_volume], axis=1)
     df_candled.to_csv(output_path)
 
-path = "/srv/sqc/data/us-options-tanq/us-options-tanq-2022/20221201/S/SPY/SPY.20221201/SPY.P408.20221201.csv.gz"
-out_path = "/srv/sqc/volatility_exploration/fixed_candle/blah.csv"
 
-options_NBBO_candle(path, out_path)
- 
-
-# %%
-df = pd.read_csv(out_path)
-plt.plot()
-plt.show()
-# %%
-plt.plot(df['UnderAskPrice'].tolist()[1500:3000])
-plt.show()
-# %%
-print(np.corrcoef(df['Ask'].tolist()[1500:3000], df['UnderAskPrice'].tolist()[1500:3000]))
-# %%
