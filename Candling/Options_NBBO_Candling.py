@@ -1,8 +1,10 @@
+# %%
 from datetime import date, time, datetime, timedelta
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# %%
 def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_time=time(16, 0, 0)):
     df = pd.read_csv(file_path, compression='gzip')
     open_interest = df.iloc[0].tolist()[9]
@@ -24,14 +26,10 @@ def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_t
 
     CLOCK_HOURS = np.array([int((start_datetime + timedelta(seconds=x)).time().strftime("%H%M%S")) for x in range(0, total_seconds)])
 
-    #filters asks and bids to only include those that are Firm Quote NBBO
-    df_nbbo = df[df['Action'] == "FQ NB"]
-    df_ask = df[df['Side'] == "A"]
-    df_bid = df[df['Side'] == "B"]
+    #filters asks and bids to only include those that are Firm Quote NBBO, and Quantity >= 75
+    df_ask = df[(df['Action'] == "FQ NB") & (df['Side'] == "A") & (df['Quantity'] >= 75)]
+    df_bid = df[(df['Action'] == "FQ NB") & (df['Side'] == "B") & (df['Quantity'] >= 75)]
 
-    #filters asks and bids where quantity is at least 75
-    df_ask = (df[df['Quantity'] >= 75])
-    df_bid = df[df['Quantity'] >= 75]
 
     #getting the last NBBO ask price of a given second group, along with its associated quantity
     df_ask = (df_ask.loc[df_ask.groupby('TimestampSec')
@@ -110,3 +108,14 @@ out_path = "/srv/sqc/volatility_exploration/fixed_candle/blah.csv"
 
 options_NBBO_candle(path, out_path)
  
+
+# %%
+df = pd.read_csv(out_path)
+plt.plot()
+plt.show()
+# %%
+plt.plot(df['UnderAskPrice'].tolist()[1500:3000])
+plt.show()
+# %%
+print(np.corrcoef(df['Ask'].tolist()[1500:3000], df['UnderAskPrice'].tolist()[1500:3000]))
+# %%
