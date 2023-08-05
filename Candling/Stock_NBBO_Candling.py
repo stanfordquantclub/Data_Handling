@@ -1,10 +1,8 @@
-# %%
 from datetime import date, time, datetime, timedelta
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# %%
 def stock_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_time=time(16, 0, 0)):
     df = pd.read_csv(file_path, compression='gzip')
 
@@ -76,8 +74,3 @@ def stock_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_tim
     df_candled = pd.concat([df_all, df_ask, df_bid, df_price, df_volume], axis=1)
     df_candled.to_csv(output_path)
 
-# %%
-file_path = "/srv/sqc/data/client-2378-luke-eq-taq/2022/20220401/S/SPY.csv.gz"
-output_path = "/srv/sqc/volatility_exploration/fixed_candle/stock.csv"
-
-stock_NBBO_candle(file_path, output_path)

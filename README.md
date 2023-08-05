@@ -18,3 +18,5 @@ Objectives:
           oscillating price movement
     - Add count of d/dprice that crosses certain threshold over different window sizes to 
       data
+
+4. 
