@@ -90,9 +90,9 @@ def options_NBBO_candle(file_path, output_path, start_time=time(9, 30, 0), end_t
     df_under_bid.reset_index(drop=True, inplace=True)
 
     #getting the number of strikes from underlying
-    mult = 1 if contract_type == "P" else -1
+    mult = -1 if contract_type == "P" else 1
     strike_price = round(float(file_path.split('/')[-1].split('.')[1][1:]), 2)
-    num_strikes = round((df_under_ask['UnderAskPrice'] - strike_price) * mult, 2) 
+    num_strikes = round((df_under_ask['UnderAskPrice'] - strike_price) * 5, 2) 
 
     #getting the open interest
     OI = np.full(len(CLOCK_HOURS), open_interest)
