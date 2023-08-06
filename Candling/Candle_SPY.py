@@ -1,8 +1,11 @@
 # %%
+import sys
+sys.path.append("/home/luke/Documents/GitHub/Data_Handling")
+
 import numpy as np
 import pandas as pd
 import pandas_market_calendars as mcal
-from Stock_NBBO_Candling import stock_NBBO_candle as stock_candle
+from Most_Recent_NBBO_Candling.Stock_NBBO_Candling import stock_NBBO_candle
 
 # %%
 #getting all market days from April 01 2022, to December 31 2022
@@ -19,7 +22,7 @@ for num in range(len(dates)):
     print(input_path)
     output_path = "/srv/sqc/volatility_exploration/fixed_candle/Stock_Data/" + date + ".csv"
 
-    stock_candle(input_path, output_path)
+    stock_NBBO_candle(input_path, output_path)
 
 
 # %%

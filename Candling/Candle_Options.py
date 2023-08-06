@@ -1,7 +1,10 @@
-# %%
+# %% 
+import sys
+sys.path.append("/home/luke/Documents/GitHub/Data_Handling")
+
 import numpy as np
 import pandas as pd
-from Candling_Tools.Options_NBBO_Candling import options_NBBO_candle
+from Most_Recent_NBBO_Candling.Options_NBBO_Candling import options_NBBO_candle
 import pandas_market_calendars as mcal
 import os
 
@@ -27,9 +30,11 @@ for ind in range(len(all_files)):
     date = all_files[ind].split('.')[1].split('/')[0]
     path = "/srv/sqc/data/us-options-tanq/us-options-tanq-2022/" + date + "/S/SPY/SPY." + date + "/" +  all_files[ind][21:] + ".gz"
     file_name = date + "/" + all_files[ind].split('.')[-3] + ".csv"
-    output_path = "/srv/sqc/volatility_exploration/fixed_candle/Options_Data/" + file_name
+    output_path = "/srv/sqc/volatility_exploration/NBBO_Candled/Most_Recent_Protocol/Options_Data/" + file_name
     print(ind)
     options_NBBO_candle(path, output_path)
 
 
 
+
+# %%
