@@ -1,14 +1,14 @@
 Objectives:
 
 Most Recent NBBO Price Protocol
-1. Recandle options data to use NBBO price data - [x]
+1. Recandle options data to use NBBO price data - [X]
     - filters asks and bids for only those that are Firm Quote NBBO
     - filters asks and bids for only those that have size lots greater than 75 (liquidity 
       purposes)
     - added open interest to better evaluate liquidity
     - reports the last firm quote NBBO ask and bid at every second grouping
 
-2. Recandle underlying SPY data to use NBBO price data - [x]
+2. Recandle underlying SPY data to use NBBO price data - [X]
     - Same Process as the options data
 
 3. Add features for training
