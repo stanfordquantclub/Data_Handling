@@ -1,4 +1,3 @@
-# %%
 import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import as_strided
@@ -33,6 +32,6 @@ def realized_vol(price, window):
     realized_vol = np.sqrt(sum) * 100
 
     # Pad the real_vol by the window length
-    real_vol = np.concatenate((np.zeros(window_length), realized_vol))
+    real_vol = np.concatenate((realized_vol, np.zeros(window_length)))
 
     return real_vol
