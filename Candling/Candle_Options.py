@@ -10,7 +10,7 @@ import os
 
 # %%
 #get all the options contracts that we will be candling this batch
-files = "/srv/sqc/volatility_exploration/temp_files.csv"
+files = "/srv/sqc/volatility_exploration/all_file_names.csv"
 df = pd.read_csv(files)
 all_files = df['all_files'].tolist()
 

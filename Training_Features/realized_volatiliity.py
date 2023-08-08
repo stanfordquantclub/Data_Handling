@@ -29,9 +29,7 @@ def realized_vol(price, window):
     print(sum)
 
     # Find the realized_vol by square rooting realized_var
-    realized_vol = np.sqrt(sum) * 100
+    realized_vol = np.sqrt(sum)
 
     # Pad the real_vol by the window length
-    real_vol = np.concatenate((realized_vol, np.zeros(window_length)))
-
-    return real_vol
+    return realized_vol

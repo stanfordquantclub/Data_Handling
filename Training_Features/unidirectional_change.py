@@ -30,14 +30,10 @@ def maxLoss(prices):
 # finds the maximum upwards unidirectional change over a given window
 def maxProfit_list(prices, window):
      fin_list = [maxProfit(prices[x:x+window]) for x in range(len(prices) - window)]
-     zeros = [0 for x in range(window)]
-     fin_list = fin_list + zeros
      return fin_list
 
 # finds the maximum downwards unidirectional change over a given window
 def maxLoss_list(prices, window):
      fin_list = [maxLoss(prices[x:x+window]) for x in range(len(prices) - window)]
-     zeros = [0 for x in range(window)]
-     fin_list = fin_list + zeros
      return fin_list
 
