@@ -11,7 +11,7 @@ def maxProfit(prices):
             if prices[ind] - low_price > maxprofit:
                 maxprofit = prices[ind] - low_price
         
-        return maxprofit
+        return round(maxprofit, 2)
 # measures the maximum profit that can be made given the sequential nature of pricing
 # this is the maximum downwards unidirectional change in price
 def maxLoss(prices):
@@ -25,7 +25,7 @@ def maxLoss(prices):
             if high_price - prices[ind] > maxloss:
                 maxloss = high_price - prices[ind]
             
-     return maxloss
+     return round(maxloss, 2)
 
 # finds the maximum upwards unidirectional change over a given window
 def maxProfit_list(prices, window):
